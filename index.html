@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>孙盛希专辑人格测试</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#11100f;color:#f6efe4;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}
+main{max-width:620px;margin:auto;padding:28px 22px 48px;min-height:100vh;background:radial-gradient(ellipse at 80% 0%,#51402c 0,transparent 42%),#151311}
+.kicker{letter-spacing:3px;color:#d6b77d;font-size:12px}.cover{min-height:82vh;display:flex;flex-direction:column;justify-content:center}
+h1{font-size:42px;line-height:1.15;margin:18px 0 12px}.sub{color:#c8bca9;line-height:1.8}
+button{border:1px solid #c6a46c;background:#c6a46c;color:#17120c;border-radius:28px;padding:14px 22px;font-size:16px;font-weight:650;cursor:pointer}
+button.secondary{background:transparent;color:#eadcc7;border-color:#76634b}button:disabled{opacity:.4}
+#start{margin-top:30px;width:100%}.top{display:flex;justify-content:space-between;color:#c8bca9;font-size:13px;margin:12px 0}
+.bar{height:4px;background:#39332b;border-radius:9px;overflow:hidden}.bar span{display:block;height:100%;background:#d6b77d;width:0}
+h2{font-size:25px;line-height:1.45;margin:28px 0 22px}.choice{display:block;width:100%;text-align:left;margin:12px 0;padding:17px 18px;background:#211e1a;color:#f6efe4;border:1px solid #514638;border-radius:15px;font-weight:400;line-height:1.5}.choice.selected{border-color:#d6b77d;background:#382d20}
+.hidden{display:none}.result{border:1px solid #76634b;border-radius:18px;padding:22px;margin:22px 0;background:#211e1a}.result h2{margin:8px 0;color:#e5c58d}.small{font-size:13px;color:#bfb3a1;line-height:1.7}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.actions button{flex:1}
+</style></head>
+<body><main>
+<section id="intro" class="cover"><div class="kicker">SHI SHI · ALBUM PERSONALITY</div><h1>你是哪一张<br>孙盛希专辑？</h1><p class="sub">用 12 道关于情绪、关系与生活选择的小题，看看哪张专辑最贴近现在的你。</p><p class="small">这是一份轻松的自我探索测试，结果仅供娱乐与自我观察。</p><button id="start">开始探索　→</button></section>
+<section id="quiz" class="hidden"><div class="top"><span id="counter">01 / 12</span><span>选择最接近你的答案</span></div><div class="bar"><span id="progress"></span></div><h2 id="question"></h2><div id="choices"></div><div class="actions"><button id="back" class="secondary">上一题</button></div></section>
+<section id="resultPage" class="hidden"><div class="kicker">YOUR ALBUM PERSONALITY</div><h1>你的灵魂专辑</h1><div class="result"><div class="small">最接近你的专辑是</div><h2 id="album"></h2><p id="desc"></p><p class="small" id="percent"></p></div><p class="sub" id="extra"></p><div class="actions"><button id="share">分享结果</button><button id="again" class="secondary">重新测试</button></div></section>
+</main>
+<script>
+const albums=[
+{name:"《Girls》",desc:"你有敏锐的感受力，也在学习把目光放回自己身上。你重视真实与自我表达，不愿为了迎合别人而失去自己的声音。",extra:"你的关键词：自我、成长、坦率。"},
+{name:"《Between》",desc:"你常常站在理性与感性、靠近与退后之间观察世界。你细腻、慢热，习惯在心里反复确认自己的感受。",extra:"你的关键词：矛盾、细腻、寻找平衡。"},
+{name:"《女・人 Woman》",desc:"你正在认识自己的力量。温柔和坚定可以同时存在，你希望被理解，也愿意为自己做决定。",extra:"你的关键词：力量、独立、自我认同。"},
+{name:"《希游记》",desc:"你对世界保有好奇，喜欢变化，也需要一点自由空间。即使偶尔迷路，你仍愿意带着期待继续探索。",extra:"你的关键词：好奇、自由、冒险。"},
+{name:"《出沒地帶》",desc:"你有自己的节奏和边界，不喜欢被轻易定义。你可能看起来安静，但内心有鲜明的想法与能量。",extra:"你的关键词：边界、个性、真实。"},
+{name:"《BOOMERANG》",desc:"你情绪浓烈、行动直接，敢于面对关系里的拉扯。你希望爱得尽兴，也希望自己始终有选择的权利。",extra:"你的关键词：热烈、释放、勇气。"}
+];
+const qs=[
+["遇到压力时，你通常会？",["先独处，整理自己的情绪","找一个信任的人聊聊","马上行动，解决眼前的问题","换个环境，让自己重新充电"],[1,2,5,3]],
+["在人际关系里，你最在意？",["能不能做真实的自己","彼此是否理解、懂得倾听","尊重与平等","相处有没有新鲜感"],[0,1,2,3]],
+["如果周末完全属于你，你会？",["听歌、看电影，享受独处","散步或去喜欢的地方发呆","安排一件想做很久的事","临时起意，去没去过的地方"],[1,0,4,3]],
+["你更像哪种天气？",["安静的阴天","雨后刚放晴","阳光强烈的晴天","变化莫测的海边天气"],[1,2,5,3]],
+["面对喜欢的人，你通常？",["观察很久才表达","希望对方能读懂我的心","主动表达，不想留下遗憾","享受暧昧和未知"],[1,0,5,3]],
+["当别人误解你时，你会？",["不急着解释，自己知道就好","希望对方认真听我说","清楚表达自己的立场","不纠结，继续做自己"],[1,2,4,0]],
+["你最近最想获得的是？",["更清楚地认识自己","一段稳定而深刻的关系","掌控生活的底气","新的体验和可能"],[0,1,2,3]],
+["你做决定更依赖？",["内心的感觉","反复思考和比较","自己的判断与行动力","当下的直觉和冲动"],[0,1,4,5]],
+["你希望别人如何记住你？",["真诚而有温度","细腻、有故事","独立、有力量","特别、自由、不被定义"],[0,1,2,4]],
+["情绪低落时，哪句话更能安慰你？",["允许自己慢慢来","有人懂我就够了","我可以重新站起来","世界还有很多可能"],[0,1,2,3]],
+["你对变化的态度是？",["需要时间适应","期待但也会不安","主动创造变化","越未知越有趣"],[1,2,4,3]],
+["选一个最像此刻你的词？",["探索","平衡","力量","释放"],[3,1,2,5]]
+];
+let idx=0,answers=[];
+const $=id=>document.getElementById(id);
+function showQuestion(){let q=qs[idx];$("counter").textContent=String(idx+1).padStart(2,"0")+" / 12";$("progress").style.width=((idx+1)/12*100)+"%";$("question").textContent=q[0];$("choices").innerHTML="";q[1].forEach((v,i)=>{let b=document.createElement("button");b.className="choice"+(answers[idx]===i?" selected":"");b.textContent="ABCD"[i]+"　"+v;b.onclick=()=>{answers[idx]=i; if(idx<qs.length-1){idx++;showQuestion()}else showResult()};$("choices").appendChild(b)});$("back").disabled=idx===0}
+function showResult(){let scores=[0,0,0,0,0,0];answers.forEach((a,i)=>scores[qs[i][2][a]]++);let max=Math.max(...scores),winner=scores.indexOf(max);$("quiz").classList.add("hidden");$("resultPage").classList.remove("hidden");$("album").textContent=albums[winner].name;$("desc").textContent=albums[winner].desc;$("extra").textContent=albums[winner].extra;$("percent").textContent="本次测试中，你与这张专辑的匹配度为 "+Math.round(max/12*100)+"%。"}
+$("start").onclick=()=>{$("intro").classList.add("hidden");$("quiz").classList.remove("hidden");showQuestion()};
+$("back").onclick=()=>{if(idx>0){idx--;showQuestion()}};
+$("again").onclick=()=>{idx=0;answers=[];$("resultPage").classList.add("hidden");$("intro").classList.remove("hidden")};
+$("share").onclick=async()=>{let t="我的孙盛希专辑人格是 "+$("album").textContent+"！"+$("desc").textContent;try{if(navigator.share)await navigator.share({title:"孙盛希专辑人格测试",text:t,url:location.href});else{await navigator.clipboard.writeText(t);alert("结果已复制，可以分享给朋友！")}}catch(e){}};
+</script></body></html>
